@@ -1,3 +1,4 @@
+const cookieParser = require("cookie-parser");
 const createError = require("http-errors");
 const express = require("express");
 const { join } = require("path");
@@ -14,13 +15,14 @@ const { json, urlencoded } = express;
 
 const app = express();
 
+app.use(cookieParser());
 app.use(logger("dev"));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(express.static(join(__dirname, "public")));
 
 app.use(function (req, res, next) {
-  const token = req.headers["x-access-token"];
+  const token = req.cookies.token;
   if (token) {
     jwt.verify(token, process.env.SESSION_SECRET, (err, decoded) => {
       if (err) {
