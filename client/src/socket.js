@@ -25,9 +25,8 @@ socket.on("connect", () => {
   });
 
   socket.on("conversation-read", (updatedConversation) => {
- 
-    store.dispatch(updatedMessagesReadStatus(updatedConversation))
-  })
+    store.dispatch(updatedMessagesReadStatus(updatedConversation));
+  });
 });
 
 const conversationRead = (updatedConversation) => {

@@ -88,8 +88,6 @@ router.patch("/updateReadStatus", async (req, res, next) => {
     const formattedConversation = formatConversation(updatedConversation);
 
     res.json(formattedConversation);
-
-    
   } catch (error) {
     next(error);
   }
