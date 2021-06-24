@@ -18,7 +18,7 @@ router.post("/", async (req, res, next) => {
       recipientId
     );
     
-    if (!conversationId && (conversation && !conversation.id)) {
+    if (conversation && !conversationId) {
       return res.sendStatus(400);
     }
 
