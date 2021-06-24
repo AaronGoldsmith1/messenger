@@ -12,41 +12,8 @@ router.get("/", async (req, res, next) => {
       return res.sendStatus(401);
     }
     const userId = req.user.id;
-    const conversations = await Conversation.findAll({
-      where: {
-        [Op.or]: {
-          user1Id: userId,
-          user2Id: userId,
-        },
-      },
-      attributes: ["id"],
-      order: [[Message, "createdAt", "ASC"]],
-      include: [
-        { model: Message },
-        {
-          model: User,
-          as: "user1",
-          where: {
-            id: {
-              [Op.not]: userId,
-            },
-          },
-          attributes: ["id", "username", "photoUrl"],
-          required: false,
-        },
-        {
-          model: User,
-          as: "user2",
-          where: {
-            id: {
-              [Op.not]: userId,
-            },
-          },
-          attributes: ["id", "username", "photoUrl"],
-          required: false,
-        },
-      ],
-    });
+    
+    const conversations = await Conversation.findAllConversationsAndMessages(userId);
 
     for (let i = 0; i < conversations.length; i++) {
       const convo = conversations[i];
