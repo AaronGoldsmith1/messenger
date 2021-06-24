@@ -1,3 +1,5 @@
+const onlineUsers = require('../../onlineUsers');
+
 function formatConversation(conversation) {
   const convoJSON = conversation.toJSON();
 
@@ -19,8 +21,9 @@ function formatConversation(conversation) {
 
   // set properties for notification count and latest message preview
   convoJSON.latestMessageText = convoJSON.messages[convoJSON.messages.length - 1].text;
+  
   convoJSON.unreadCount = convoJSON.messages.filter((message) => {
-    message.unread && message.senderId === convoJSON.otherUser.id
+    return message.unread && message.senderId === convoJSON.otherUser.id
   }).length;
 
   return convoJSON;

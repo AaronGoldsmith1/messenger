@@ -34,7 +34,7 @@ const Sidebar = (props) => {
         .filter((conversation) => conversation.otherUser.username.includes(searchTerm))
         .sort((a, b) => moment(b.messages[b.messages.length - 1]?.createdAt) - moment(a.messages[a.messages.length - 1]?.createdAt))
         .map((conversation) => {
-          return <Chat conversation={conversation} key={conversation.otherUser.username} />;
+          return <Chat conversation={conversation} key={conversation.otherUser.username} unreadCount={conversation.unreadCount} />;
         })}
     </Box>
   );

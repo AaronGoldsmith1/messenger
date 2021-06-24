@@ -46,6 +46,13 @@ io.on("connection", (socket) => {
       sender: data.sender,
     });
   });
+  
+  socket.on("conversation-read", (data) => {
+    socket.to(onlineUsers[data.updatedConversation.otherUser.id])
+      .emit("conversation-read", {
+        updatedConversation: data.updatedConversation
+      });
+  });
 
   socket.on("logout", (id) => {
     if (onlineUsers.includes(id)) {
