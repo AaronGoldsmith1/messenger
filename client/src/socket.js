@@ -29,10 +29,4 @@ socket.on("connect", () => {
   });
 });
 
-const conversationRead = (updatedConversation) => {
-  socket.emit("conversation-read", {
-    updatedConversation
-  })
-}
-
-export { socket, conversationRead };
+export default socket;

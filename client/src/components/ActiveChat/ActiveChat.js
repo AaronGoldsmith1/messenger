@@ -27,9 +27,9 @@ const ActiveChat = (props) => {
   const conversation = props.conversation || {};
   const dispatch = useDispatch();
 
-   useEffect(() => {
-    dispatch(updateMessagesReadStatus(conversation))
-  })
+  useEffect(() => {
+    dispatch(updateMessagesReadStatus(conversation));
+  });
 
   return (
     <Box className={classes.root}>
