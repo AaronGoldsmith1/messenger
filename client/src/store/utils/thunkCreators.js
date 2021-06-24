@@ -1,5 +1,5 @@
 import axios from "axios";
-import socket from "../../socket";
+import { socket, conversationRead } from "../../socket";
 import {
   gotConversations,
   addConversation,
@@ -109,7 +109,7 @@ export const updateMessagesReadStatus = (body) => async (dispatch) => {
         const { data } = await axios.patch("/api/messages/updateReadStatus", body)
         dispatch(updatedMessagesReadStatus(data))
 
-        socket.conversationRead(data)
+        conversationRead(data)
       } 
     } 
   } catch (error) {

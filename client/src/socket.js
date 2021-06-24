@@ -25,11 +25,15 @@ socket.on("connect", () => {
   });
 
   socket.on("conversation-read", (updatedConversation) => {
-    socket.emit("conversation-read", {
-      updatedConversation
-    })
+ 
     store.dispatch(updatedMessagesReadStatus(updatedConversation))
   })
 });
 
-export default socket;
+const conversationRead = (updatedConversation) => {
+  socket.emit("conversation-read", {
+    updatedConversation
+  })
+}
+
+export { socket, conversationRead };

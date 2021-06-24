@@ -29,7 +29,7 @@ const ActiveChat = (props) => {
 
    useEffect(() => {
     dispatch(updateMessagesReadStatus(conversation))
-  }, [dispatch, conversation.messages?.length])
+  })
 
   return (
     <Box className={classes.root}>
