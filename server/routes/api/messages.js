@@ -2,6 +2,8 @@ const router = require("express").Router();
 const { Conversation, Message } = require("../../db/models");
 const onlineUsers = require("../../onlineUsers");
 
+const { formatConversation } = require('../../lib/conversations');
+
 // expects {recipientId, text, conversationId } in body (conversationId will be null if no conversation exists yet)
 router.post("/", async (req, res, next) => {
   try {
@@ -45,5 +47,51 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
+
+router.patch("/updateReadStatus", async (req, res, next) => {
+  try {
+    const senderId = req.user.id;
+    const { otherUser, messages, id: conversationId } = req.body;
+
+    const conversation = await Conversation.findConversation(
+      senderId,
+      otherUser.id
+    );
+
+    // Verify conversation exists and matches the request
+    if (conversation && conversationId === conversation.id) {
+        await Message.update({
+          unread: false,
+        }, {
+          where: {
+            conversationId: {
+              [Op.eq]: conversation.id
+            },
+            senderId: {
+              [Op.not]: senderId
+            },
+            unread: {
+              [Op.is]: true
+            }
+          }
+        });
+    } else if (conversation && conversationId != conversation.id) {
+      return res.sendStatus(403);
+    }
+
+    const updatedConversation = await Conversation.findOneConversationAndMessages(
+      senderId, 
+      otherUser.id
+    );
+    
+    const formattedConversation = formatConversation(updatedConversation);
+
+    res.json(formattedConversation);
+
+    
+  } catch (error) {
+    next(error);
+  }
+})
 
 module.exports = router;
