@@ -77,7 +77,6 @@ router.get("/", async (req, res, next) => {
       return new Date(b.messages[b.messages.length - 1]?.createdAt) - new Date(a.messages[a.messages.length - 1]?.createdAt);
     });
 
-
     res.json(conversations);
   } catch (error) {
     next(error);
