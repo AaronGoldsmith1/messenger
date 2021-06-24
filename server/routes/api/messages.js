@@ -11,6 +11,7 @@ router.post("/", async (req, res, next) => {
     if (!req.user) {
       return res.sendStatus(401);
     }
+
     const senderId = req.user.id;
     const { recipientId, text, conversationId, sender } = req.body;
 
@@ -20,6 +21,10 @@ router.post("/", async (req, res, next) => {
       recipientId
     );
     
+    if (conversation && !conversationId) {
+      return res.sendStatus(400);
+    }
+
     //ensure conversation exists between sender and recipient and matches request
     if (conversation && conversationId === conversation.id) {
       const message = await Message.create({ senderId, text, conversationId });

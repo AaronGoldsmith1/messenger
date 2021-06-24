@@ -3,7 +3,6 @@ import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { Search, Chat, CurrentUser } from "./index.js";
-import moment from "moment";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,7 +31,6 @@ const Sidebar = (props) => {
       <Search handleChange={handleChange} />
       {conversations
         .filter((conversation) => conversation.otherUser.username.includes(searchTerm))
-        .sort((a, b) => moment(b.messages[b.messages.length - 1]?.createdAt) - moment(a.messages[a.messages.length - 1]?.createdAt))
         .map((conversation) => {
           return <Chat conversation={conversation} key={conversation.otherUser.username} unreadCount={conversation.unreadCount} />;
         })}
