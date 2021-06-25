@@ -108,7 +108,6 @@ export const updateMessagesReadStatus = (body) => async (dispatch) => {
       if (unreadCount > 0) {
         const { data } = await axios.patch("/api/messages/updateReadStatus", body)
         dispatch(updatedMessagesReadStatus(data))
-        
         socket.emit("conversation-read", {
           updatedConversation: data
         });
