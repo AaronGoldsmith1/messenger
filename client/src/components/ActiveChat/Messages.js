@@ -17,7 +17,7 @@ const Messages = (props) => {
             text={message.text} 
             time={time} 
             otherUser={otherUser} 
-            lastReadMessage={message.id === lastReadMessage.id ? lastReadMessage : ''} 
+            lastReadMessage={message.id === lastReadMessage?.id ? lastReadMessage : ''} 
           />
         ) : (
           <OtherUserBubble 
