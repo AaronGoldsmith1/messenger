@@ -1,21 +1,9 @@
-import React, {useState} from "react";
-import { Box, Avatar } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
+import { Box } from "@material-ui/core";
 import { SenderBubble, OtherUserBubble } from "../ActiveChat";
 import moment from "moment";
 
-const useStyles = makeStyles(() => ({
-  avatar: {
-    width: 20,
-    height: 20,
-    float: 'right',
-    marginTop: 5,
-    },
-}));
-
-
 const Messages = (props) => {
-  const classes = useStyles();
   const { messages, otherUser, userId } = props;
   const lastReadMessage = messages.filter((message) => message.senderId === userId && !message.unread).pop();
   
@@ -24,16 +12,20 @@ const Messages = (props) => {
       {messages.map((message, idx) => {
         const time = moment(message.createdAt).format("h:mm");
         return message.senderId === userId ? (
-          <>
-          <SenderBubble key={message.id} text={message.text} time={time} />
-          { message.id === lastReadMessage?.id ? 
-            <Avatar alt={otherUser.username} src={otherUser.photoUrl} className={classes.avatar}></Avatar> : ''}
-          </>
+          <SenderBubble 
+            key={message.id} 
+            text={message.text} 
+            time={time} 
+            otherUser={otherUser} 
+            lastReadMessage={message.id === lastReadMessage.id ? lastReadMessage : ''} 
+          />
         ) : (
-          <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
-
-
-
+          <OtherUserBubble 
+            key={message.id} 
+            text={message.text} 
+            time={time} 
+            otherUser={otherUser} 
+          />
         );
       })}
     </Box>
