@@ -6,7 +6,8 @@ const useStyles = makeStyles(() => ({
   avatar: {
     width: 20,
     height: 20,
-    marginTop: 5,
+    marginTop: 8,
+    marginBottom: 8,
     float: 'right'
   },
   root: {
@@ -50,3 +51,4 @@ const SenderBubble = (props) => {
 };
 
 export default SenderBubble;
+
