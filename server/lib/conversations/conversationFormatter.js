@@ -36,6 +36,10 @@ function formatAllConversations(conversations) {
     conversations[i] = formattedConvo;
   }
 
+  conversations.sort((a, b) => {
+    return b.messages[b.messages.length - 1]?.createdAt - a.messages[a.messages.length - 1]?.createdAt;
+  });
+
   return conversations;
 }
 
