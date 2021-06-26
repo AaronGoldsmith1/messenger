@@ -15,6 +15,7 @@ import { ImageSideBanner } from './components'
 import bgImg from './assets/bg-img.png';
 import { register } from "./store/utils/thunkCreators";
 
+
 const useStyles = makeStyles((theme) => ({
   signup: {
     height: '100vh',
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
       margin: '1.2rem',
       color: "#B0B0B0",
       fontSize: '1.1em'
-
+      
     },
     '& button': {
       boxShadow: '0px 8px 16px 0px rgb(0 0 0 / 13%)',
@@ -49,31 +50,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Signup = (props) => {
-  const history = useHistory();
-  const { user, register } = props;
-  const [formErrorMessage, setFormErrorMessage] = useState({});
-  const classes = useStyles();
-
-  const handleRegister = async (event) => {
-    event.preventDefault();
-    const username = event.target.username.value;
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    const confirmPassword = event.target.confirmPassword.value;
-
-    if (password !== confirmPassword) {
-      setFormErrorMessage({ confirmPassword: "Passwords must match" });
-      return;
-    }
-
-    await register({ username, email, password });
-  };
-
-  if (user.id) {
-    return <Redirect to="/home" />;
-  }
-
- const Signup = (props) => {
   const history = useHistory();
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
@@ -181,7 +157,6 @@ const Signup = (props) => {
     </Grid>
   );
 };
-
 
 const mapStateToProps = (state) => {
   return {
