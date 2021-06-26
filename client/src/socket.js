@@ -7,26 +7,60 @@ import {
   updatedMessagesReadStatus,
 } from "./store/conversations";
 
-const socket = io(window.location.origin);
+class Socket {
+  constructor() {
+    this.socket = io({
+      autoConnect: false,
+      secure: true
+    });
+  }
 
-socket.on("connect", () => {
-  console.log("connected to server");
-
-  socket.on("add-online-user", (id) => {
-    store.dispatch(addOnlineUser(id));
-  });
-
-  socket.on("remove-offline-user", (id) => {
-    store.dispatch(removeOfflineUser(id));
-  });
+  connectSocket(userId){
+    this.socket.on('connect', () => {
   
-  socket.on("new-message", (data) => {
-    store.dispatch(setNewMessage(data.message, data.sender, data.isRecipient));
-  });
+      this.socket.on("add-online-user", (id) => {
+        store.dispatch(addOnlineUser(id));
+      });
+      
+      this.socket.on("remove-offline-user", (id) => {
+        store.dispatch(removeOfflineUser(id));
+      });
+    
+      this.socket.on("new-message", (data) => {
+        store.dispatch(setNewMessage(data.message, data.sender, data.isRecipient));
+      });
 
-  socket.on("conversation-read", (updatedConversation) => {
-    store.dispatch(updatedMessagesReadStatus(updatedConversation));
-  });
-});
+      this.socket.on("conversation-read", (updatedConversation) => {
+        store.dispatch(updatedMessagesReadStatus(updatedConversation))
+      })
+    });
+  
+    this.socket.open();
+    this.socket.emit("go-online", userId);
+  
+    return this.socket
+  }
 
-export default socket;
+  conversationRead(updatedConversation){
+    this.socket.emit("conversation-read", {
+      updatedConversation
+    })
+  }
+
+  sendNewMessage(data,body) {
+    this.socket.emit("new-message", {
+      message: data.message,
+      recipientId: body.recipientId,
+      sender: data.sender,
+    });
+  }
+
+  disconnectSocketOnLogout(id){
+    this.socket.emit("logout", id);
+    this.socket.disconnect(true);
+  }
+}
+
+const Socket = new Socket();
+
+export default Socket
