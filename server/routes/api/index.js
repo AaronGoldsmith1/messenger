@@ -1,8 +1,11 @@
 const router = require("express").Router();
+const messagesRouter = require("./messages");
+const conversationsRouter = require("./conversations");
+const usersRouter = require("./users");
 
-router.use("/messages", require("./messages"));
-router.use("/conversations", require("./conversations"));
-router.use("/users", require("./users"));
+router.use("/messages", messagesRouter);
+router.use("/conversations", conversationsRouter);
+router.use("/users", usersRouter);
 
 router.use((req, res, next) => {
   const error = new Error("Not Found");
