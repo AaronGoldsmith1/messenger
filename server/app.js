@@ -15,7 +15,7 @@ const { json, urlencoded } = express;
 
 const app = express();
 const authRoutes = require("./routes/auth");
-const apiRoutes = require("./routes/auth");
+const apiRoutes = require("./routes/api");
 
 app.use(cookieParser());
 app.use(logger("dev"));
