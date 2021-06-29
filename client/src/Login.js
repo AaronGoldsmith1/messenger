@@ -14,7 +14,7 @@ import { ImageSideBanner } from './components'
 import bgImg from './assets/bg-img.png';
 import { login } from "./store/utils/thunkCreators";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   login: {
     height: '100vh',
   },
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   formTitle: {
     textAlign: 'left'
   }
-}));
+});
 
 
 const Login = (props) => {

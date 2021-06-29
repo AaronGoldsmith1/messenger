@@ -16,7 +16,7 @@ import bgImg from './assets/bg-img.png';
 import { register } from "./store/utils/thunkCreators";
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   signup: {
     height: '100vh',
   },
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left'
   }
 
-}));
+});
 
 const Signup = (props) => {
   const history = useHistory();
