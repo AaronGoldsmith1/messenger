@@ -7,26 +7,66 @@ import {
   updatedMessagesReadStatus,
 } from "./store/conversations";
 
-const socket = io(window.location.origin);
+class Socket {
+  constructor() {
+    this.socket = io({
+      autoConnect: false,
+      secure: true
+    });
+  }
 
-socket.on("connect", () => {
-  console.log("connected to server");
+  connectSocket(userId){
+    this.socket.on("connect", () => {
+  
+    this.socket.on("add-online-user", (id) => {
+      store.dispatch(addOnlineUser(id));
+    });
+      
+    this.socket.on("remove-offline-user", (id) => {
+      store.dispatch(removeOfflineUser(id));
+    });
+    
+    this.socket.on("new-message", (data) => {
+      store.dispatch(setNewMessage(data.message, data.sender, data.isRecipient));
+    });
 
-  socket.on("add-online-user", (id) => {
-    store.dispatch(addOnlineUser(id));
-  });
-
-  socket.on("remove-offline-user", (id) => {
-    store.dispatch(removeOfflineUser(id));
+    this.socket.on("conversation-read", (updatedConversation) => {
+      store.dispatch(updatedMessagesReadStatus(updatedConversation))
+    });
   });
   
-  socket.on("new-message", (data) => {
-    store.dispatch(setNewMessage(data.message, data.sender, data.isRecipient));
-  });
+    this.socket.open();
+    this.socket.emit("go-online", userId);
+  
+    return this.socket
+  }
 
-  socket.on("conversation-read", (updatedConversation) => {
-    store.dispatch(updatedMessagesReadStatus(updatedConversation));
-  });
-});
+  conversationRead(updatedConversation){
+    this.socket.emit("conversation-read", {
+      updatedConversation
+    })
+  }
 
-export default socket;
+  sendMessage(data,body) {
+    this.socket.emit("new-message", {
+      message: data.message,
+      recipientId: body.recipientId,
+      sender: data.sender,
+    });
+  }
+
+  disconnectSocketOnLogout(id){
+    this.socket.emit("logout", id);
+    this.socket.disconnect(true);
+  }
+
+  updateReadStatus(data) {
+    this.socket.emit("conversation-read", {
+      updatedConversation: data
+    });
+  }
+}
+
+const SocketUtil = new Socket();
+
+export default SocketUtil;
