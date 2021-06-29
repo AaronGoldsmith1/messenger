@@ -44,7 +44,15 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("new-message", {
       message: data.message,
       sender: data.sender,
+      isRecipient: true,
     });
+  });
+  
+  socket.on("conversation-read", (data) => {
+    socket.to(onlineUsers[data.updatedConversation.otherUser.id])
+      .emit("conversation-read", {
+        updatedConversation: data.updatedConversation
+      });
   });
 
   socket.on("logout", (id) => {
