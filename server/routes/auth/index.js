@@ -90,6 +90,7 @@ router.delete("/logout", (req, res, next) => {
   res.sendStatus(204);
 });
 
+//check cookies for valid jwt
 router.get("/user", (req, res, next) => {
   if (req.user) {
     return res.json(req.user);
