@@ -86,7 +86,7 @@ export const postMessage = (body) => async (dispatch) => {
       dispatch(setNewMessage(data.message));
     }
 
-    SocketUtil.sendMessage(data, body);
+    SocketUtil.sendNewMessage(data, body);
   } catch (error) {
     console.error(error);
   }
