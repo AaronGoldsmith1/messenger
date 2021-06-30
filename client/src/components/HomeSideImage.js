@@ -33,7 +33,7 @@ const HomeSideImage = () => {
   return (
     <Box component={Grid} item sm={4} md={5} display={{ xs: "none", md: "block" }}>
       <Grid container className={classes.sideBanner}>
-        <Grid item container direction="column" justify="center" >
+        <Grid item container direction="column" justify="center">
           <BubbleSVG className={classes.bannerIcon}/>
           <Typography align="center" className={classes.bannerText}>Converse with anyone in any language</Typography>
         </Grid>
