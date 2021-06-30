@@ -9,42 +9,41 @@ import {
   TextField,
   CssBaseline,
 } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
-import { ImageSideBanner } from './components'
-import bgImg from './assets/bg-img.png';
+import { makeStyles } from "@material-ui/core/styles";
+import { HomeSideImage } from "./components"
 import { login } from "./store/utils/thunkCreators";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   login: {
-    height: '100vh',
+    height: "100vh",
   },
   loginForm:{
-    width: '50%',
+    width: "50%",
   },
   formElem: {
-    width: '100%'
+    width: "100%"
   },
   register: {
-    padding: '2rem 3rem 0 0',
-    '& p':{
-      margin: '1.2rem',
+    padding: "2rem 3rem 0 0",
+    "& p":{
+      margin: "1.2rem",
       color: "#B0B0B0",
-      fontSize: '1.1em'
+      fontSize: "1.1em"
 
     },
-    '& button': {
-      boxShadow: '0px 8px 16px 0px rgb(0 0 0 / 13%)',
-      padding: '1rem 2.5rem'
+    "& button": {
+      boxShadow: "0px 8px 16px 0px rgb(0 0 0 / 13%)",
+      padding: "1rem 2.5rem"
     }
   },
   submitButton: {
-    marginTop: '2rem',
-    padding: '1rem 3.5rem',
+    marginTop: "2rem",
+    padding: "1rem 3.5rem",
   },
   formTitle: {
-    textAlign: 'left'
+    textAlign: "left"
   }
-}));
+});
 
 
 const Login = (props) => {
@@ -68,15 +67,15 @@ const Login = (props) => {
     <Grid container className={classes.login}>
       <CssBaseline />
 
-      <ImageSideBanner bgImg={bgImg}></ImageSideBanner>
+      <HomeSideImage></HomeSideImage>
       
-      <Grid container item direction='row' sm={12} md={7}>
-        <Grid container item justify='flex-end' alignItems='flex-start' className={classes.register}>
+      <Grid container item direction="row" sm={12} md={7}>
+        <Grid container item justify="flex-end" alignItems="flex-start" className={classes.register}>
           <Typography>Dont have an account?</Typography>
           <Button onClick={() => history.push("/register")} size="large" color="primary">Create Account</Button>
         </Grid>
 
-        <Grid container item align='center' justify='center'>
+        <Grid container item align="center" justify="center">
         
         <form onSubmit={handleLogin} className={classes.loginForm}>
           <Typography gutterBottom={true} variant="h4" className={classes.formTitle}>Welcome back!</Typography>

@@ -47,7 +47,7 @@ class Socket {
     })
   }
 
-  sendNewMessage(data,body) {
+  sendMessage(data,body) {
     this.socket.emit("new-message", {
       message: data.message,
       recipientId: body.recipientId,
