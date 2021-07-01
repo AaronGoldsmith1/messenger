@@ -14,6 +14,8 @@ const sessionStore = new SequelizeStore({ db });
 const { json, urlencoded } = express;
 
 const app = express();
+const authRoutes = require("./routes/auth");
+const apiRoutes = require("./routes/api");
 
 app.use(cookieParser());
 app.use(logger("dev"));
@@ -41,8 +43,8 @@ app.use(function (req, res, next) {
 });
 
 // require api routes here after I create them
-app.use("/auth", require("./routes/auth"));
-app.use("/api", require("./routes/api"));
+app.use("/auth", authRoutes);
+app.use("/api", apiRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
